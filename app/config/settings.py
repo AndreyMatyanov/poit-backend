@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = '.env'
 
-
+print(os.getenv('APP_CONFIG'))
 settings = Settings(_env_file=os.getenv('APP_CONFIG'), _env_file_encoding='utf-8')
 
 UPLOADED_FILES_PATH = "uploaded_files/"
