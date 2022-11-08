@@ -46,6 +46,8 @@ def get_lesson_by_user_teacher_id_and_schedule_day(
         user_teacher_id=user_teacher_id,
         schedule_day_id=schedule_day_id
     )
+    if lesson_db is None:
+        return None
     return parse_obj_as(Lesson, lesson_db)
 
 
