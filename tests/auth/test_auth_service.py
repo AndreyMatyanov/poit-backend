@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.config.security import validate_password
 from app.schemas.group import CreateGroup
-from app.schemas.user import UserTeacherCreate, UserStudentCreate
+from app.schemas.user import UserTeacherCreate, UserStudentCreate, RoleType
 from app.service import user_teacher_service, user_student_service, user_service, group_service
 
 
@@ -82,7 +82,7 @@ def test_auth(db: Session):
     # When
     user = user_service.get_user_by_email(db=db, email=user_student_create.email)
     is_validate = validate_password(password=user_student_create.password, hashed_password=user.hashed_password)
-    token = user_service.create_user_token(db=db, user_id=user.id)
+    token = user_service.create_user_token(db=db, user_id=user.id, roles=[user.role])
     # Then
     assert is_validate is True
     assert token.user.email == user_student_create.email
