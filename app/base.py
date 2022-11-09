@@ -9,3 +9,6 @@ from app.models.discipline import Discipline
 from app.models.lesson import Lesson
 from app.models.file import File
 from app.models.publication import Publication
+from app.models.course_project_base import CourseProjectBase
+from app.models.course_project_user_teacher import CourseProjectUserTeacher
+from app.models.stage_course_project import StageCourseProject

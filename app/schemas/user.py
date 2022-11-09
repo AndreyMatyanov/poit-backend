@@ -45,6 +45,7 @@ class TokenBase(BaseModel):
     token: UUID4 = Field(..., alias="access_token")
     expires: datetime
     token_type: Optional[str] = "bearer"
+    roles: list
 
     class Config:
         allow_population_by_field_name = True,

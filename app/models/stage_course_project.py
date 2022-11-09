@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from app.db.database import Base
 from sqlalchemy import Column, Integer, ForeignKey, String, Boolean, DateTime
 
@@ -11,3 +13,5 @@ class StageCourseProject(Base):
     description = Column(String)
     is_done = Column(Boolean)
     deadline_date = Column(DateTime)
+
+    course_project = relationship("CourseProjectBase", back_populates="stages", foreign_keys=[course_project_id], lazy='joined')

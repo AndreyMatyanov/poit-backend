@@ -28,7 +28,7 @@ def get_user_by_token(db: Session, token: str):
     return response
 
 
-def create_user_token(db: Session, user_id: int):
+def create_user_token(db: Session, user_id: int, roles: list):
     token = UserSession(
         token=uuid.uuid4(),
         expires=datetime.now() + timedelta(weeks=2),
