@@ -64,4 +64,3 @@ def _create_base_course_project_base(
         deadline_date=graduation_date
     )
     create_step_course_project(db=db, step_course_project_create=step)
-

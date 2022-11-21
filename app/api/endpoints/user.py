@@ -17,6 +17,10 @@ async def read_users_me(db: Session = Depends(get_db), current_user: UserSession
     return user_service.get_user_by_id(db=db, id=current_user.user_id)
 
 
+@router.get('/')
+async def get_all_users(db: Session = Depends(get_db)):
+    return user_service.get_all_users(db=db)
+
 @router.post("/me")
 def update_my_user():
     pass

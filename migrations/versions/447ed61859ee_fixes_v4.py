@@ -1,8 +1,8 @@
-"""Add rel
+"""fixes v4
 
-Revision ID: a3a75ffabb5e
-Revises: 0f39b4586b05
-Create Date: 2022-11-08 22:20:06.658013
+Revision ID: 447ed61859ee
+Revises: a0fb2f94a285
+Create Date: 2022-11-20 15:11:00.925979
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a3a75ffabb5e'
-down_revision = '0f39b4586b05'
+revision = '447ed61859ee'
+down_revision = 'a0fb2f94a285'
 branch_labels = None
 depends_on = None
 

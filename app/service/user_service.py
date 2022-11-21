@@ -1,6 +1,6 @@
 import json
 import uuid
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 
 from pydantic import parse_obj_as
@@ -21,6 +21,10 @@ tournament_se_model = with_polymorphic(User, [UserTeacherModel])
 
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
     return db.query(User).filter(User.email == email).one_or_none()
+
+
+def get_all_users(db: Session) -> List[User]:
+    return user_crud.get_multi(db=db)
 
 
 def get_user_by_token(db: Session, token: str):
@@ -74,4 +78,3 @@ def get_user_by_id(db: Session, id: int) -> Optional[UserTeacher | UserStudent]:
 
 def delete_user_by_id(db: Session, id: int):
     return user_crud.remove(db=db, id=id)
-

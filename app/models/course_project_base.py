@@ -12,5 +12,9 @@ class CourseProjectBase(Base):
     percent_of_completion = Column(Float, nullable=False)
 
     stages = relationship("StageCourseProject", back_populates="course_project",
-                             primaryjoin="StageCourseProject.course_project_id == CourseProjectBase.id",
-                             lazy='joined', uselist=True)
+                          order_by="asc(StageCourseProject.deadline_date)",
+                          primaryjoin="StageCourseProject.course_project_id == CourseProjectBase.id",
+                          lazy='joined', uselist=True)
+
+    discipline = relationship('Discipline', foreign_keys=[discipline_id],
+                              primaryjoin='Discipline.id == CourseProjectBase.discipline_id')

@@ -3,6 +3,8 @@ from typing import List
 
 from pydantic import BaseModel
 
+from app.schemas.lesson import Discipline
+
 
 class StageCourseProjectBase(BaseModel):
     id: int
@@ -84,6 +86,7 @@ class CourseProjectBase(BaseModel):
     user_student_id: int
     percent_of_completion: float
     stages: List[StageCourseProjectBase]
+    discipline: Discipline
 
     class Config:
         orm_mode = True

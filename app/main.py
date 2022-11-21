@@ -13,6 +13,7 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://127.0.0.1:5173",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -22,6 +23,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/")
 async def read_main():

@@ -8,7 +8,7 @@ from app.crud.course_project_user_teacher_crud import course_project_user_teache
 from app.schemas.course_project import CreateCourseProject, CreateCourseProjectRequest, \
     CreateCourseProjectForGroupRequest, CreateCourseProjectUserTeacher, CourseProjectBase
 from app.service.group_service import get_students_by_group_id
-from app.service.step_course_project import _create_base_course_project_base
+from app.service.step_course_project_service import _create_base_course_project_base
 
 
 def create_course_project(db: Session, create_project: CreateCourseProjectRequest):
@@ -34,7 +34,7 @@ def create_course_project(db: Session, create_project: CreateCourseProjectReques
 
 def create_course_projects_for_group(db: Session, create_projects_request: CreateCourseProjectForGroupRequest):
     users_students = get_students_by_group_id(db=db, group_id=create_projects_request.group_id)
-    projects: List = []
+    projects: List[CourseProjectBase] = []
     for user_student in users_students:
         course_project_create = CreateCourseProject(
             discipline_id=create_projects_request.discipline_id,
