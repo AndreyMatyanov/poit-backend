@@ -31,7 +31,13 @@ def create_project(create_project: CreateGraduationProjectRequest, db: Session =
     return project
 
 
-@router.get('/get-by-user-id/{user-id}')
+@router.get('/get-by-user-id/{user_id}')
 def get_by_user_student(user_id: int, db: Session = Depends(get_db)):
     project = graduation_project_service.get_project_by_user_id(db=db, user_id=user_id)
     return project
+
+
+@router.get('/get-by-user-teacher-id/{user_id}', response_model=List[GraduationProjectBase])
+def get_by_user_teacher(user_id: int, db: Session = Depends(get_db)):
+    projects = graduation_project_service.get_by_user_teacher_id(db=db, user_id=user_id)
+    return projects

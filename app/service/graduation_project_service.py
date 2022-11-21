@@ -4,6 +4,7 @@ from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
 from app.crud.graduation_project_crud import graduation_project_crud
+from app.crud.graduation_project_user_teacher_crud import graduation_project_user_teacher_crud
 from app.schemas.graduation_project import CreateGraduationProjectForGroupRequest, CreateGraduationProjectRequest, \
     GraduationProjectBase, CreateGraduationProject, UpdateGraduationProject
 from app.service.group_service import get_students_by_group_id
@@ -69,3 +70,13 @@ def get_project_by_user_id(db: Session, user_id: int) -> Optional[GraduationProj
     if project_db is None:
         return None
     return parse_obj_as(GraduationProjectBase, project_db)
+
+
+def get_by_user_teacher_id(db: Session, user_id: int) -> List[GraduationProjectBase]:
+    projects_user_teacher = graduation_project_user_teacher_crud.get_by_user_id(db=db, user_id=user_id)
+    projects: List[GraduationProjectBase] = []
+    for project_user_teacher in projects_user_teacher:
+        project_db = get_project_by_id(db=db, id=project_user_teacher.graduation_project_id)
+        project = parse_obj_as(GraduationProjectBase, project_db)
+        projects.append(project)
+    return projects

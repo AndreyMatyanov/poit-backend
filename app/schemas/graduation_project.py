@@ -88,3 +88,16 @@ class CreateGraduationProjectForGroupRequest(BaseModel):
     project_completion_date: datetime
     admission_project_protection_date: datetime
     graduation_date: datetime
+
+
+class GraduationProjectUserTeacher(BaseModel):
+    user_teacher_id: int
+    graduation_project_id: int
+
+
+class CreateGraduationProjectUserTeacher(GraduationProjectUserTeacher):
+    pass
+
+
+class UpdateGraduationProjectUserTeacher(CreateGraduationProjectUserTeacher):
+    pass
