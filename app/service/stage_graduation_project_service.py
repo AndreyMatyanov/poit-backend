@@ -84,6 +84,7 @@ def set_is_done(db: Session, stage_id: int):
         is_done=True,
         deadline_date=step_db.deadline_date
     )
+    print(update_stage)
     step_graduation_project_crud.update(db=db, db_obj=step_db, obj_in=update_stage)
     _set_percent_of_complete(db=db, project_id=step_db.graduation_project_id)
     return True
