@@ -6,7 +6,6 @@ from starlette import status
 from starlette.responses import FileResponse
 
 from app.api.depends import get_db
-from app.config.settings import UPLOADED_FILES_PATH, PUBLICATION_FILES_PATH
 from app.service import file_service
 from app.schemas.file import File as FileSchema, CreateFile
 from app.service.file_service import format_filename, get_file_size, save_file_to_uploads

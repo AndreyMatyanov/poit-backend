@@ -107,3 +107,17 @@ def _set_percent_of_complete(db: Session, project_id: int):
     )
 
     graduation_project_crud.update(db=db, db_obj=project_db, obj_in=project_update)
+
+
+def update(db: Session, id: int, obj_upd: UpdateStageGraduationProject):
+    project_db = step_graduation_project_crud.get(db=db, id=id)
+
+    update_stage = UpdateStageGraduationProject(
+        graduation_project_id=obj_upd.graduation_project_id,
+        title=obj_upd.title,
+        description=obj_upd.title,
+        is_done=obj_upd.is_done,
+        deadline_date=obj_upd.deadline_date
+    )
+    graduation_project_crud.update(db=db, db_obj=project_db, obj_in=update_stage)
+    return True

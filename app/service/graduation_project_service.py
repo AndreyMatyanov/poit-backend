@@ -59,8 +59,8 @@ def create_project(db: Session, create_project_rq: CreateGraduationProjectReques
     )
 
 
-def update_project(db: Session, obj_up: UpdateGraduationProject):
-    project_db = get_project_by_user_id(db=db, user_id=obj_up.user_student_id)
+def update_project(db: Session, obj_up: UpdateGraduationProject, id: int):
+    project_db = get_project_by_id(db=db, id=id)
     graduation_project_crud.update(db=db, db_obj=project_db, obj_in=obj_up)
     return True
 

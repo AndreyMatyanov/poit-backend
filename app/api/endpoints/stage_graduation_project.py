@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.api.depends import get_db
-from app.schemas.graduation_project import StageGraduationProjectBase, CreateStageGraduationProject
+from app.schemas.graduation_project import StageGraduationProjectBase, CreateStageGraduationProject, \
+    UpdateStageGraduationProject
 from app.service import stage_graduation_project_service
 
 router = APIRouter()
@@ -28,4 +29,10 @@ def create_stage(cr_stage: CreateStageGraduationProject, db: Session = Depends(g
 @router.post('/set-is_done/{stage_id}')
 def set_stage_is_done(stage_id: int, db: Session = Depends(get_db)):
     stage = stage_graduation_project_service.set_is_done(db=db, stage_id=stage_id)
+    return stage
+
+
+@router.put("/{stage_id}")
+def update_stage(stage_id: int, obj_upd: UpdateStageGraduationProject, db: Session = Depends(get_db)):
+    stage = stage_graduation_project_service.update(db=db, id=stage_id, obj_upd=obj_upd)
     return stage
