@@ -16,3 +16,4 @@ from app.models.graduation_project_base import GraduationProjectBase
 from app.models.graduation_project_user_teacher_id import GraduationProjectUserTeacher
 from app.models.stage_graduation_project import StageGraduationProject
 from app.models.graduation_request import GraduationRequest
+from app.models.count_of_teachers_projects import CountOfTeachersProjects

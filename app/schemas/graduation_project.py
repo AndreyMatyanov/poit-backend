@@ -54,6 +54,7 @@ class GraduationProjectBase(BaseModel):
     theme: str
     pattern_of_education: PatternOfEducation
     stages: List[StageGraduationProjectBase]
+    user: UserStudent
 
     class Config:
         orm_mode = True
@@ -106,4 +107,4 @@ class UpdateGraduationProjectUserTeacher(CreateGraduationProjectUserTeacher):
 
 class TeacherProject(BaseModel):
     user_teacher: UserTeacher
-    projects: List
+    projects: List[GraduationProjectBase]

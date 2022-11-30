@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.api.depends import get_db, verify_admin
+from app.schemas.count_of_teachers_project import CreateCountOfTeacherProject, CountOfTeacherProjectBase
 from app.schemas.graduation_project import GraduationProjectBase, CreateGraduationProjectForGroupRequest, \
     CreateGraduationProject, CreateGraduationProjectRequest, UpdateGraduationProject, TeacherProject
 from app.service import graduation_project_service
@@ -52,4 +53,16 @@ def update_diplome(id: int, obj_update: UpdateGraduationProject, db: Session = D
 @router.get('/get-all-teachers-projects', response_model=List[TeacherProject])
 def get_all_teachers_projects(db: Session = Depends(get_db)):
     obj = graduation_project_service.get_all_teachers_projects(db=db)
+    return obj
+
+
+@router.get('/get-count-of-teachers-projects', response_model=List[CountOfTeacherProjectBase])
+def get_count_of_teachers_projects(db: Session = Depends(get_db)):
+    obj = graduation_project_service.get_count_of_teachers_projects(db=db)
+    return obj
+
+
+@router.post('/create-count-of-teachers-projects')
+def create_count_of_teachers_projects(create_obj: CreateCountOfTeacherProject, db: Session = Depends(get_db)):
+    obj = graduation_project_service.create_count_of_teacher_projects(db=db, create_obj=create_obj)
     return obj

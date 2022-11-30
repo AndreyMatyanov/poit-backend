@@ -3,8 +3,10 @@ from typing import Optional, List, Union
 from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
 
+from app.crud.count_of_teachers_projects_crud import course_project_user_teacher_crud
 from app.crud.graduation_project_crud import graduation_project_crud
 from app.crud.graduation_project_user_teacher_crud import graduation_project_user_teacher_crud
+from app.schemas.count_of_teachers_project import CreateCountOfTeacherProject, CountOfTeacherProjectBase
 from app.schemas.graduation_project import CreateGraduationProjectForGroupRequest, CreateGraduationProjectRequest, \
     GraduationProjectBase, CreateGraduationProject, UpdateGraduationProject, TeacherProject, StageGraduationProjectBase
 from app.schemas.user import RoleType
@@ -96,3 +98,12 @@ def get_all_teachers_projects(db: Session) -> List[TeacherProject]:
         )
         teacher_project_list.append(teacher_project)
     return teacher_project_list
+
+
+def get_count_of_teachers_projects(db: Session):
+    objs = course_project_user_teacher_crud.get_multi(db=db)
+    return [CountOfTeacherProjectBase.from_orm(obj) for obj in objs]
+
+def create_count_of_teacher_projects(db: Session, create_obj: CreateCountOfTeacherProject):
+    obj = course_project_user_teacher_crud.create(db=db, obj_in=create_obj)
+    return obj
