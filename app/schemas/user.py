@@ -8,7 +8,6 @@ from app.schemas.group import GroupBase
 
 
 class RoleType(EnumBaseUpper):
-    USER = 'USER'
     STUDENT = 'STUDENT'
     TEACHER = 'TEACHER'
     ADMIN = 'ADMIN'
@@ -70,6 +69,9 @@ class UserStudent(UserBase):
     number_of_ticket: int
     group: GroupBase
     subgroup: int
+
+    class Config:
+        orm_mode = True
 
 
 class UserTeacherCreate(UserCreate):

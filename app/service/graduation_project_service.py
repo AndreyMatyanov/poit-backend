@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Union
 
 from pydantic import parse_obj_as
 from sqlalchemy.orm import Session
@@ -6,7 +6,9 @@ from sqlalchemy.orm import Session
 from app.crud.graduation_project_crud import graduation_project_crud
 from app.crud.graduation_project_user_teacher_crud import graduation_project_user_teacher_crud
 from app.schemas.graduation_project import CreateGraduationProjectForGroupRequest, CreateGraduationProjectRequest, \
-    GraduationProjectBase, CreateGraduationProject, UpdateGraduationProject
+    GraduationProjectBase, CreateGraduationProject, UpdateGraduationProject, TeacherProject, StageGraduationProjectBase
+from app.schemas.user import RoleType
+from app.service import user_service
 from app.service.group_service import get_students_by_group_id
 from app.service.stage_graduation_project_service import _create_base_graduation_project_base
 
@@ -16,7 +18,8 @@ def get_all_projects(db: Session):
 
 
 def get_project_by_id(db: Session, id: int):
-    return graduation_project_crud.get(db=db, id=id)
+    project_db = graduation_project_crud.get(db=db, id=id)
+    return GraduationProjectBase.parse_obj(project_db)
 
 
 def create_projects_for_group(db: Session, create_projects_request: CreateGraduationProjectForGroupRequest):
@@ -74,9 +77,22 @@ def get_project_by_user_id(db: Session, user_id: int) -> Optional[GraduationProj
 
 def get_by_user_teacher_id(db: Session, user_id: int) -> List[GraduationProjectBase]:
     projects_user_teacher = graduation_project_user_teacher_crud.get_by_user_id(db=db, user_id=user_id)
-    projects: List[GraduationProjectBase] = []
+    projects: Union[GraduationProjectBase, List[GraduationProjectBase]] = []
     for project_user_teacher in projects_user_teacher:
         project_db = get_project_by_id(db=db, id=project_user_teacher.graduation_project_id)
-        project = parse_obj_as(GraduationProjectBase, project_db)
+        project = GraduationProjectBase.parse_obj(project_db)
         projects.append(project)
     return projects
+
+
+def get_all_teachers_projects(db: Session) -> List[TeacherProject]:
+    users = user_service.get_by_role(role=RoleType.TEACHER, db=db)
+    teacher_project_list: List[TeacherProject] = []
+    for user in users:
+        projects = get_by_user_teacher_id(db=db, user_id=user.id)
+        teacher_project = TeacherProject(
+            user_teacher=user,
+            projects=projects
+        )
+        teacher_project_list.append(teacher_project)
+    return teacher_project_list

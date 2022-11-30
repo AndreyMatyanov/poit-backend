@@ -16,3 +16,4 @@ class GraduationProjectBase(Base):
                           order_by="asc(StageGraduationProject.deadline_date)",
                           primaryjoin="StageGraduationProject.graduation_project_id == GraduationProjectBase.id",
                           lazy='joined', uselist=True)
+    user = relationship('User', foreign_keys=[user_student_id], primaryjoin='User.id == GraduationProjectBase.user_student_id')

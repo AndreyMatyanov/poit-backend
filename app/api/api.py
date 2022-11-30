@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 
 from app.api.endpoints import \
-    post_endpoint, user, auth, group, lesson, discipline, file, publication, course_project, graduation_project, stage_graduation_project
+    post_endpoint, user, auth, group, lesson, discipline, file, publication, course_project, graduation_project, \
+    stage_graduation_project, graduation_request_endpoint
 
 api_router = APIRouter()
 api_router.include_router(user.router, prefix="/user", tags=["User"])
@@ -15,3 +16,4 @@ api_router.include_router(publication.router, prefix="/publication", tags=['Publ
 api_router.include_router(course_project.router, prefix="/course-project", tags=['Course Project'])
 api_router.include_router(graduation_project.router, prefix="/graduation-project", tags=['Graduation Project'])
 api_router.include_router(stage_graduation_project.router, prefix="/stage-graduation-project", tags=['Stage Graduation Project'])
+api_router.include_router(graduation_request_endpoint.router, prefix="/graduation-project-request", tags=['Graduation Project Request'])

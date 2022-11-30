@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.depends import get_db, verify_admin
 from app.schemas.graduation_project import GraduationProjectBase, CreateGraduationProjectForGroupRequest, \
-    CreateGraduationProject, CreateGraduationProjectRequest, UpdateGraduationProject
+    CreateGraduationProject, CreateGraduationProjectRequest, UpdateGraduationProject, TeacherProject
 from app.service import graduation_project_service
 
 router = APIRouter()
@@ -47,3 +47,9 @@ def get_by_user_teacher(user_id: int, db: Session = Depends(get_db)):
 def update_diplome(id: int, obj_update: UpdateGraduationProject, db: Session = Depends(get_db)):
     project = graduation_project_service.update_project(db=db, obj_up=obj_update, id=id)
     return project
+
+
+@router.get('/get-all-teachers-projects', response_model=List[TeacherProject])
+def get_all_teachers_projects(db: Session = Depends(get_db)):
+    obj = graduation_project_service.get_all_teachers_projects(db=db)
+    return obj

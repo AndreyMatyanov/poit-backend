@@ -78,3 +78,7 @@ def get_user_by_id(db: Session, id: int) -> Optional[UserTeacher | UserStudent]:
 
 def delete_user_by_id(db: Session, id: int):
     return user_crud.remove(db=db, id=id)
+
+
+def get_by_role(role: RoleType, db: Session):
+    return user_crud.get_users_by_role(db=db, role=role)

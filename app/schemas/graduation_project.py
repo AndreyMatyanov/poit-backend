@@ -4,6 +4,7 @@ from typing import List
 from pydantic import BaseModel
 
 from app.schemas.base import EnumBaseUpper
+from app.schemas.user import UserTeacher, UserStudent
 
 
 class PatternOfEducation(EnumBaseUpper):
@@ -101,3 +102,8 @@ class CreateGraduationProjectUserTeacher(GraduationProjectUserTeacher):
 
 class UpdateGraduationProjectUserTeacher(CreateGraduationProjectUserTeacher):
     pass
+
+
+class TeacherProject(BaseModel):
+    user_teacher: UserTeacher
+    projects: List[GraduationProjectBase]

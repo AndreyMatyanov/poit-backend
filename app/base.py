@@ -15,3 +15,4 @@ from app.models.stage_course_project import StageCourseProject
 from app.models.graduation_project_base import GraduationProjectBase
 from app.models.graduation_project_user_teacher_id import GraduationProjectUserTeacher
 from app.models.stage_graduation_project import StageGraduationProject
+from app.models.graduation_request import GraduationRequest

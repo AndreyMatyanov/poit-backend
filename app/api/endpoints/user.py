@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.api.depends import get_db, exchange_token
 from app.schemas import user
 from app.schemas.session import UserSession
-from app.schemas.user import User, UserTeacher, UserStudent
+from app.schemas.user import User, UserTeacher, UserStudent, RoleType
 from app.service import user_service
 
 router = APIRouter()
@@ -21,6 +21,7 @@ async def read_users_me(db: Session = Depends(get_db), current_user: UserSession
 async def get_all_users(db: Session = Depends(get_db)):
     return user_service.get_all_users(db=db)
 
+
 @router.post("/me")
 def update_my_user():
     pass
@@ -30,6 +31,12 @@ def update_my_user():
 def get_user_by_id(id: int, db: Session = Depends(get_db)):
     user: Optional[UserTeacher] | Optional[UserStudent] = user_service.get_user_by_id(db=db, id=id)
     return user
+
+
+@router.get("/get-by-role/{role}")
+def get_teachers(role: RoleType, db: Session = Depends(get_db)):
+    users: List[UserTeacher] = user_service.get_by_role(db=db, role=role)
+    return users
 
 
 @router.delete("/{id}")

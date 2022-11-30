@@ -20,5 +20,4 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         users = db.query(self.model).filter(self.model.role == role)
         return users.all()
 
-
 user_crud = CRUDUser(User)
