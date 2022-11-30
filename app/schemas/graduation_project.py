@@ -106,4 +106,4 @@ class UpdateGraduationProjectUserTeacher(CreateGraduationProjectUserTeacher):
 
 class TeacherProject(BaseModel):
     user_teacher: UserTeacher
-    projects: List[GraduationProjectBase]
+    projects: List

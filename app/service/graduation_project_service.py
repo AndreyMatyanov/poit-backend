@@ -19,7 +19,7 @@ def get_all_projects(db: Session):
 
 def get_project_by_id(db: Session, id: int):
     project_db = graduation_project_crud.get(db=db, id=id)
-    return GraduationProjectBase.parse_obj(project_db)
+    return project_db
 
 
 def create_projects_for_group(db: Session, create_projects_request: CreateGraduationProjectForGroupRequest):
@@ -80,8 +80,8 @@ def get_by_user_teacher_id(db: Session, user_id: int) -> List[GraduationProjectB
     projects: Union[GraduationProjectBase, List[GraduationProjectBase]] = []
     for project_user_teacher in projects_user_teacher:
         project_db = get_project_by_id(db=db, id=project_user_teacher.graduation_project_id)
-        project = GraduationProjectBase.parse_obj(project_db)
-        projects.append(project)
+        print(project_db.user.name)
+        projects.append(project_db)
     return projects
 
 
