@@ -16,7 +16,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         user: Optional[User] = db.execute(stmt).unique().scalar_one_or_none()
         return user
 
-    def get_users_by_role(self, db: Session, role: RoleType) -> List[User]:
+    def get_users_by_role(self, db: Session, role: RoleType) -> List[UserTeacher | UserStudent]:
         users = db.query(self.model).filter(self.model.role == role)
         return users.all()
 

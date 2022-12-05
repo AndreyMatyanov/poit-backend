@@ -13,7 +13,7 @@ class GraduationProjectBase(Base):
     theme = Column(String)
 
     stages = relationship("StageGraduationProject",
-                          order_by="asc(StageGraduationProject.deadline_date)",
+                          order_by="desc(StageGraduationProject.deadline_date)",
                           primaryjoin="StageGraduationProject.graduation_project_id == GraduationProjectBase.id",
                           lazy='joined', uselist=True)
     user = relationship('User', foreign_keys=[user_student_id],

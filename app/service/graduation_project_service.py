@@ -104,6 +104,7 @@ def get_count_of_teachers_projects(db: Session):
     objs = course_project_user_teacher_crud.get_multi(db=db)
     return [CountOfTeacherProjectBase.from_orm(obj) for obj in objs]
 
+
 def create_count_of_teacher_projects(db: Session, create_obj: CreateCountOfTeacherProject):
     obj = course_project_user_teacher_crud.create(db=db, obj_in=create_obj)
     return obj

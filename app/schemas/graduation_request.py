@@ -28,7 +28,7 @@ class CreateGraduationRequest(BaseModel):
     user_teacher_id: int
     theme: str
     description: str
-    status: Optional[StatusOfRequest] = StatusOfRequest.WAITING
+    status: StatusOfRequest = StatusOfRequest.WAITING
 
 
 class UpdateGraduationRequest(CreateGraduationRequest):

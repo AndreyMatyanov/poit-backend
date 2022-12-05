@@ -1,4 +1,5 @@
 from typing import Optional
+from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
@@ -31,7 +32,7 @@ def create_student_user(user: user.UserStudentCreate, db: Session = Depends(get_
     return user_student_service.create_user_student(db=db, user_student_create=user)
 
 
-@router.post("/login", response_model=user.TokenBase)
+@router.post("/login", response_model=UUID)
 def auth(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user: Optional[User] = user_service.get_user_by_email(db=db, email=form_data.username)
     roles = [user.role]
@@ -44,13 +45,7 @@ def auth(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends
     if not validate_password(password=form_data.password, hashed_password=user.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     token_db = user_service.create_user_token(db=db, user_id=user.id, roles=roles)
-    token = TokenBase(
-        token=token_db.token,
-        expires=token_db.expires,
-        token_type="bearer",
-        roles=roles
-    )
-    return token
+    return token_db.token
 
 
 @router.post("/login-test", response_model=UserBase)
